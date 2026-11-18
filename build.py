@@ -282,7 +282,11 @@ APPS = [
         ],
         free="The game is free with ads. Pro removes all ad formats; it does not add boards, and nothing else is promised.",
         prices=dict(weekly="$0.99", monthly="$1.99", yearly="$9.99", lifetime="$14.99"),
-        analytics=True, crash=True, ads=True, tracking=True,
+        # project.yml declares FirebaseAnalytics/FirebaseCrashlytics in a second
+        # "dependencies:" key, which YAML drops, and packages: lists only
+        # google-mobile-ads — CalmTiles.xcodeproj has no Firebase reference, so
+        # this build links AdMob only. Flip these two when the SDK is really linked.
+        analytics=False, crash=False, ads=True, tracking=True,
         disclaimer=None,
         faq=[
             ("How do I remove the ads?",
