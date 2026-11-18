@@ -656,6 +656,22 @@ def obsolete(what: str) -> str:
     )
 
 
+def landing(app: dict) -> str:
+    """<slug>/ — the marketing URL in App Store Connect."""
+    name, slug = app["name"], app["slug"]
+    return (
+        head(f"{name}")
+        + nav(slug, name)
+        + f"<h1>{name}</h1>"
+        + f"<p>{app['purpose']}</p>"
+        + "<h2>Pages</h2>"
+        + f'<ul><li><a href="/legal/{slug}/privacy/">Privacy policy</a></li>'
+        + f'<li><a href="/legal/{slug}/terms/">Terms of use</a></li>'
+        + f'<li><a href="/legal/{slug}/support/">Support</a></li></ul>'
+        + tail()
+    )
+
+
 def index() -> str:
     return (
         head("Legal — iOS apps")
@@ -679,10 +695,11 @@ def main() -> None:
             target = root / app["slug"] / page / "index.html"
             target.parent.mkdir(parents=True, exist_ok=True)
             target.write_text(content(app), encoding="utf-8")
-        (root / "index.html").write_text(index(), encoding="utf-8")
+        (root / app["slug"] / "index.html").write_text(landing(app), encoding="utf-8")
+    (root / "index.html").write_text(index(), encoding="utf-8")
     (root / "privacy" / "index.html").write_text(obsolete("Privacy policy"), encoding="utf-8")
     (root / "support" / "index.html").write_text(obsolete("Support"), encoding="utf-8")
-    print(f"wrote {len(APPS)} apps x 3 pages + index.html")
+    print(f"wrote {len(APPS)} apps x 4 pages + index.html + 2 redirect stubs")
     if "--check" in sys.argv:
         for app in APPS:
             for page in ("privacy", "terms", "support"):
@@ -691,6 +708,7 @@ def main() -> None:
                 text = path.read_text(encoding="utf-8")
                 assert EMAIL in text, f"{path}: no contact email"
                 assert EULA in text or page != "terms", f"{path}: terms without Apple EULA"
+            assert (root / app["slug"] / "index.html").exists(), app["slug"]
         print("check: every page exists, has the contact email, terms cite Apple's EULA")
 
 
