@@ -510,11 +510,18 @@ def privacy(app: dict) -> str:
         "anyone, including children.</p>"
     )
     body.append("<h2>Your rights</h2>")
+    # Only an app that ships Google SDKs has Google-held data to write about; the
+    # no-collection apps must not claim collection in the same paragraph.
+    google_controller = (
+        "For the advertising and analytics data described above, Google is the controller of that processing and its "
+        "privacy pages explain how to exercise your rights there. "
+        if app["ads"] or app["analytics"] or app["crash"] else ""
+    )
     body.append(
         "<p>We hold no personal data that identifies you, so there is nothing on our side to export, correct or delete. "
-        "Data on your device is under your control: change it in the app, or delete the app. For the advertising and "
-        "analytics data described above, Google is the controller of that processing and its privacy pages explain how "
-        "to exercise your rights there. If you have a question about this policy or a request under the GDPR, UK GDPR or "
+        "Data on your device is under your control: change it in the app, or delete the app. "
+        + google_controller
+        + "If you have a question about this policy or a request under the GDPR, UK GDPR or "
         f'CCPA, write to <a href="mailto:{EMAIL}">{EMAIL}</a>.</p>'
     )
     body.append("<h2>Changes</h2>")
