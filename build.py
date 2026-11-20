@@ -286,7 +286,7 @@ APPS = [
         # "dependencies:" key, which YAML drops, and packages: lists only
         # google-mobile-ads — CalmTiles.xcodeproj has no Firebase reference, so
         # this build links AdMob only. Flip these two when the SDK is really linked.
-        analytics=False, crash=False, ads=True, tracking=True,
+        analytics=False, crash=False, ads=True, tracking=True, rewarded=True,
         disclaimer=None,
         faq=[
             ("How do I remove the ads?",
@@ -311,7 +311,7 @@ APPS = [
         ],
         free="The game is free with ads. Pro removes all ad formats; it does not add pictures or cuts, and nothing else is promised.",
         prices=dict(weekly="$0.99", monthly="$1.99", yearly="$9.99", lifetime="$14.99"),
-        analytics=False, crash=False, ads=True, tracking=True,
+        analytics=False, crash=False, ads=True, tracking=True, rewarded=False,
         disclaimer=None,
         faq=[
             ("How do I remove the ads?",
@@ -335,7 +335,7 @@ APPS = [
         ],
         free="The game is free with ads. Pro removes all ad formats; undo and hints are free and stay free.",
         prices=dict(weekly="$0.99", monthly="$1.99", yearly="$9.99", lifetime="$14.99"),
-        analytics=False, crash=False, ads=True, tracking=True,
+        analytics=False, crash=False, ads=True, tracking=True, rewarded=True,
         disclaimer=None,
         faq=[
             ("How do I remove the ads?",
@@ -355,11 +355,12 @@ APPS = [
             "solution.",
             "Hints name the technique — naked single, hidden single, locked candidates — and show why it works.",
             "Levels are set by the deduction the puzzle forces, not by the number of blank cells.",
-            "Pencil marks and unlimited undo, on the phone only. No timer.",
+            "Pencil marks and unlimited undo, on the phone only. A clock counts up if you want it; nothing expires and "
+            "nothing fails you when it runs long.",
         ],
         free="The game is free with ads. Pro removes all ad formats; hints, levels and undo are free and stay free.",
         prices=dict(weekly="$0.99", monthly="$1.99", yearly="$9.99", lifetime="$14.99"),
-        analytics=False, crash=False, ads=True, tracking=True,
+        analytics=False, crash=False, ads=True, tracking=True, rewarded=True,
         disclaimer=None,
         faq=[
             ("How do I remove the ads?",
@@ -449,8 +450,11 @@ def privacy(app: dict) -> str:
 
     if app["ads"]:
         body.append("<h2>Ads</h2>")
+        rewarded = (" and, only when you choose to watch one in exchange for a hint, a rewarded video"
+                    if app.get("rewarded") else "")
         body.append(
-            "<p>Ads are supplied by Google AdMob: a banner on the game screen and an interstitial at a natural break. "
+            "<p>Ads are supplied by Google AdMob: a banner at the bottom of the game screen, an interstitial after a "
+            f"finished board{rewarded}. "
             "To select and measure those ads, Google may process a device advertising identifier, an IP-derived coarse "
             "location, device type, operating-system version and ad interaction events. We receive aggregate revenue "
             "reports, never personal information about you.</p>"
