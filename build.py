@@ -605,6 +605,50 @@ APPS = [
              "coins."),
         ],
     ),
+    dict(
+        slug="hamsterhaul", name="Hamster Haul",
+        purpose=("Hamster Haul is a crate-pushing puzzle: nudge Biscuit the hamster around a snack warehouse until every "
+                 "wooden crate sits on a glowing dot. Walking is free and only a push spends the move budget."),
+        local=[
+            "One to four crates in rooms from 6×6 to 9×9. The level you open is generated on the phone from its number "
+            "and solved by the app's own search before it is drawn, so a route always exists and level 37 is the same "
+            "warehouse on every launch. The trail has no fixed end.",
+            "Stars follow the push count against the level's proven best. There is no timer, and every tenth level is "
+            "pitched at the easy end of its band as a breather.",
+            "A hint shows the next push of a proven route and undo steps back one push; both are paid from coins, and "
+            "coins are earned for free as well.",
+            "Finishing a level pays coins, the daily snack tin pays 25 to 200 coins across a seven-day streak, and coins "
+            "also buy the mint and sunset hamster coats. Optional reward videos can pay a hint, double a win or double "
+            "the daily reward.",
+            "Progress, stars, coins and settings stay in this app's own storage on the phone, with no account and no "
+            "sync.",
+        ],
+        free=("The game is free with ads. Remove Ads is one payment that stops every ad format; the Starter Pack adds 500 "
+              "coins and 5 hints; the three coin packs are optional. No purchase unlocks a level."),
+        prices=dict(removeads="$3.99", starter="$2.99",
+                    coins_small="$1.99", coins_medium="$4.99", coins_large="$9.99"),
+        subs=False,
+        analytics=False, crash=False, ads=True, tracking=True, rewarded=True,
+        disclaimer=None,
+        faq=[
+            ("How do I remove the ads?",
+             "Buy Remove Ads in the snack pantry, then Restore Purchases on another device signed in with the same Apple "
+             "Account. It stops banner and interstitial requests for good; optional reward videos stay optional."),
+            ("A crate is stuck in a corner.",
+             "Undo steps back one push, and a hint shows the next push of the route the app proved before it drew the "
+             "room. Nothing in this game needs a purchase to be cleared; if a level still looks stuck, send the level "
+             "number and we treat it as a bug."),
+            ("Do I need a subscription?",
+             "No. There is no subscription in this app. Every purchase is charged once, and the free game plays every "
+             "level in the trail."),
+            ("Can I turn off ad tracking?",
+             "Yes. iOS Settings → Privacy & Security → Tracking. In the EEA and UK, Google's consent form appears before "
+             "ads are requested the first time, and declining still leaves non-personalised ads."),
+            ("Where is my progress?",
+             "On this phone only. There is no account and no cloud sync, so deleting the app deletes progress, stars and "
+             "coins."),
+        ],
+    ),
 ]
 
 
