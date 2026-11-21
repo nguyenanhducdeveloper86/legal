@@ -373,6 +373,121 @@ APPS = [
              "are requested the first time."),
         ],
     ),
+    dict(
+        slug="fruitfizz", name="Fruit Fizz: Match Quest",
+        purpose="Fruit Fizz is a soda-bar match-3: swap neighbouring fruits, clear the order and watch the glass fizz over.",
+        local=[
+            "Eight-by-eight boards of six fruit shapes; swap two neighbours to line up three or more and the matches "
+            "clear, fruit falls and new fruit fills in.",
+            "Four in a line leaves a row or column fizz, crossing lines leave a bomb, five in a line leaves a colour burst.",
+            "200 levels, each measured by a practice bot and tuned until it sits in its own difficulty band; a breather "
+            "every tenth level and a badge on every twenty-fifth.",
+            "Goals are an order of one fruit, jelly tiles to clear or crates to drop to the floor. Each board has a move "
+            "budget and no timer.",
+            "The board is seeded, so the same moves always replay to the same board; when no swap is left the board "
+            "shuffles instead of ending the round.",
+            "Coins are earned by finishing levels and by the daily reward, and are spent on hints and undo pockets. "
+            "Progress, coins and settings stay on the phone.",
+        ],
+        free=("The game is free with ads. Remove Ads is one payment that stops every ad format; the Starter Pack adds coins "
+              "and undo pockets. No purchase unlocks a level — all 200 are already in the app."),
+        prices=dict(removeads="$3.99", starter="$2.99",
+                    coins_small="$1.99", coins_medium="$4.99", coins_large="$9.99"),
+        subs=False,
+        analytics=False, crash=False, ads=True, tracking=True, rewarded=True,
+        disclaimer=None,
+        faq=[
+            ("How do I remove the ads?",
+             "Buy Remove Ads on the shop screen, then Restore Purchases on another device signed in with the same Apple "
+             "Account. It stops ad requests for good; levels, coins and hints are unchanged otherwise."),
+            ("A board feels impossible.",
+             "Each board has a move budget measured by a bot, so it has been finished inside that budget. Undo as far "
+             "back as you like, spend 30 coins on a hint, or take the optional video for one after your first win."),
+            ("I ran out of moves.",
+             "The lose sheet offers five more moves for coins, or a rewarded video. Nothing expires and you can replay "
+             "the level as often as you like."),
+            ("Can I turn off ad tracking?",
+             "Yes. iOS Settings → Privacy & Security → Tracking. In the EEA and UK, Google's consent form appears before "
+             "ads are requested the first time, and declining still leaves non-personalised ads."),
+            ("Where is my progress?",
+             "On this phone only. There is no account and no cloud sync, so deleting the app deletes progress and coins."),
+        ],
+    ),
+    dict(
+        slug="llamalatin", name="Llama Lines: Latin Square",
+        purpose=("Llama Lines is a latin-square number puzzle: every row, every column and every chained group of cells "
+                 "holds each number from 1 to N exactly once."),
+        local=[
+            "Grids from 4x4 to 7x7. A chain hops sideways, up and diagonally, so the regions are drawn leashes rather "
+            "than square boxes.",
+            "Every level is generated on the phone with exactly one solution; a clue is dropped only while the solver can "
+            "still prove the answer is unique.",
+            "Hints place or repair one digit from that solution, undo covers every move, and pencil notes stay in the "
+            "round until you clear them.",
+            "No countdown timer: each level has a move budget shown as moves remaining. Progress, coins and settings are "
+            "stored on the phone only.",
+        ],
+        free=("The game is free with ads. Remove Ads is one payment that stops every ad format; the Starter Pack adds coins "
+              "and hints. No purchase unlocks a level — levels past 200 are generated in the app."),
+        prices=dict(removeads="$3.99", starter="$2.99",
+                    coins_small="$1.99", coins_medium="$4.99", coins_large="$9.99"),
+        subs=False,
+        analytics=False, crash=False, ads=True, tracking=True, rewarded=True,
+        disclaimer=None,
+        faq=[
+            ("How do I remove the ads?",
+             "Buy Remove Ads on the shop screen, then Restore Purchases on another device signed in with the same Apple "
+             "Account. It stops ad requests for good; levels, coins and hints are unchanged otherwise."),
+            ("What is a chain?",
+             "A chain is one leash of N cells drawn across the grid. Those cells must also hold 1 to N once each, on top "
+             "of the row and column rules."),
+            ("Is it sudoku?",
+             "No. Sudoku boxes are 3x3 squares; here a chain can bend and hop in eight directions, and the grid is 4x4 to "
+             "7x7. The rule it shares with sudoku is the one about no repeats."),
+            ("I ran out of moves.",
+             "The lose sheet offers five more moves for coins, and you can replay the level as often as you like. "
+             "Nothing expires."),
+            ("Can I turn off ad tracking?",
+             "Yes. iOS Settings → Privacy & Security → Tracking. In the EEA and UK, Google's consent form appears before "
+             "ads are requested the first time, and declining still leaves non-personalised ads."),
+            ("Where is my progress?",
+             "On this phone only. There is no account and no cloud sync, so deleting the app deletes progress and coins."),
+        ],
+    ),
+    dict(
+        slug="noodleconnect", name="NoodleConnect",
+        purpose="NoodleConnect is a number-link puzzle: 1,000 bowls of 5×5 to 7×7 where every meatball is joined to its twin "
+                "and every level ships with exactly one solution.",
+        local=[
+            "1,000 levels, each generated on the device and checked by a solver to have exactly one solution before it is "
+            "handed to a player.",
+            "Three bowl sizes — 5×5, 6×6 and 7×7 — that grow as you finish levels.",
+            "Drag from one meatball to its twin; noodles never cross and the bowl is full when every cell is covered.",
+            "A hint that draws one whole noodle, unlimited undo, restart, and a pause that keeps the round you are in.",
+            "Coins for finishing a level for the first time, spent on hints, undos and two extra noodle colours. No timer.",
+        ],
+        free="The game is free with ads. Every level, the hint and unlimited undo are free. The shop sells Remove Ads, a "
+             "one-time Starter Pack (500 coins and 5 hints) and three coin packs; nothing in it is a subscription, and "
+             "nothing expires.",
+        subs=False,
+        prices=dict(removeads="$3.99", starter="$2.99", coins_small="$1.99", coins_medium="$4.99", coins_large="$9.99"),
+        analytics=False, crash=False, ads=True, tracking=True, rewarded=True,
+        disclaimer=None,
+        faq=[
+            ("How do I remove the ads?",
+             "Buy Remove Ads in the shop, or the Starter Pack, which also removes forced ads. On another device signed in "
+             "with the same Apple Account, tap Restore purchases."),
+            ("A bowl looks like it has two answers.",
+             "It does not: every level is generated on the phone and only kept when a solver finds one solution. If a "
+             "second answer really works, send us the level number — we treat it as a bug."),
+            ("Can I buy coins twice?",
+             "Yes, coin packs repeat as often as you like. Remove Ads and the Starter Pack are one-time purchases and stay "
+             "active for the life of the Apple Account that bought them."),
+            ("Can I turn off ad tracking?",
+             "Yes. iOS Settings → Privacy & Security → Tracking. In the EEA and UK, Google's consent form appears before ads "
+             "are requested the first time."),
+        ],
+    ),
 ]
 
 
@@ -541,16 +656,15 @@ def privacy(app: dict) -> str:
     return head(f"{name} Privacy Policy") + "\n".join(body) + "\n" + tail()
 
 
-def terms(app: dict) -> str:
-    name, slug, p = app["name"], app["slug"], app["prices"]
-    body = [nav(slug, name), f"<h1>{name} Terms of Use</h1>",
-            f'<p style="opacity:.6">Last updated {UPDATED}. These terms cover {name} for iPhone and every purchase made '
-            "inside it.</p>",
-            "<h2>Licence</h2>",
-            f'<p>{name} is licensed, not sold, to you for use on Apple devices you own or control, under Apple\'s standard '
-            f'End User License Agreement: <a href="{EULA}">{EULA}</a>. Where these terms and Apple\'s agreement differ, '
-            "Apple's agreement governs the licensed application itself. Nothing in these terms limits rights Apple's EULA "
-            "gives you.</p>",
+def purchase_terms(app: dict) -> list[str]:
+    """Pricing prose: the 12 subscription apps, or a catalogue of one-off purchases.
+
+    The games sell Remove Ads, a starter pack and three coin packs — nothing renews, so
+    auto-renewal and cancellation text would describe a product that does not exist.
+    """
+    p = app["prices"]
+    if app.get("subs", True):
+        return [
             "<h2>Free features and Pro</h2>",
             f"<p>{app['free']}</p>",
             "<p>Pro is one entitlement. It is sold in four forms for one app: a weekly, monthly or yearly auto-renewable "
@@ -579,14 +693,48 @@ def terms(app: dict) -> str:
             "<h2>Lifetime purchase</h2>",
             f"<p>The lifetime purchase is a single non-consumable payment of {p['lifetime']}. It does not renew, has no "
             "end date and has nothing to cancel. It stays active unless the store refunds it.</p>",
+        ]
+    return [
+        "<h2>What you can buy</h2>",
+        f"<p>{app['free']}</p>",
+        "<p>There is no subscription in this app: nothing renews and there is nothing to cancel. Each purchase below is "
+        "charged once to your Apple Account, at the price your App Store storefront shows before you confirm.</p>",
+        "<table>\n<thead><tr><th>Purchase</th><th>What it is</th><th>Price</th></tr></thead>\n<tbody>",
+        f"<tr><td>Remove Ads</td><td>One payment, permanent; stops every ad format</td><td>{p['removeads']}</td></tr>",
+        f"<tr><td>Starter Pack</td><td>One payment, permanent; a coin bundle and five hints, once</td>"
+        f"<td>{p['starter']}</td></tr>",
+        f"<tr><td>Coins — small</td><td>Consumable, spent in the game</td><td>{p['coins_small']}</td></tr>",
+        f"<tr><td>Coins — medium</td><td>Consumable, spent in the game</td><td>{p['coins_medium']}</td></tr>",
+        f"<tr><td>Coins — large</td><td>Consumable, spent in the game</td><td>{p['coins_large']}</td></tr>",
+        "</tbody></table>",
+        "<h2>Coins</h2>",
+        "<p>Coins are spent inside the game and are not returned once spent. They are also earned by finishing levels "
+        "and by the daily reward, so no purchase is needed to play any level.</p>",
+    ]
+
+
+def terms(app: dict) -> str:
+    name, slug = app["name"], app["slug"]
+    body = [nav(slug, name), f"<h1>{name} Terms of Use</h1>",
+            f'<p style="opacity:.6">Last updated {UPDATED}. These terms cover {name} for iPhone and every purchase made '
+            "inside it.</p>",
+            "<h2>Licence</h2>",
+            f'<p>{name} is licensed, not sold, to you for use on Apple devices you own or control, under Apple\'s standard '
+            f'End User License Agreement: <a href="{EULA}">{EULA}</a>. Where these terms and Apple\'s agreement differ, '
+            "Apple's agreement governs the licensed application itself. Nothing in these terms limits rights Apple's EULA "
+            "gives you.</p>",
+            *purchase_terms(app),
             "<h2>Restoring a purchase</h2>",
             "<p>Tap <em>Restore Purchases</em> on the purchase screen, signed in with the same Apple Account that bought "
             "it. Purchases cannot be transferred between Apple Accounts. If a restore does not bring Pro back, write to "
             f'<a href="mailto:{EMAIL}">{EMAIL}</a> with the product name and the date of purchase.</p>',
             "<h2>Refunds</h2>",
             "<p>Refunds are handled by Apple, not by us — we cannot see or reverse a charge. Request one at "
-            f'<a href="{REPORT_PROBLEM}">{REPORT_PROBLEM}</a>. A refunded purchase stops unlocking Pro; work you already '
-            "saved on the device is kept.</p>",
+            f'<a href="{REPORT_PROBLEM}">{REPORT_PROBLEM}</a>. '
+            + ("A refunded purchase stops unlocking Pro; work you already saved on the device is kept.</p>"
+               if app.get("subs", True) else
+               "A refunded purchase is removed from your Apple Account; coins you already spent and levels you already "
+               "cleared on the device are kept.</p>"),
             "<h2>What you may not do</h2>",
             "<p>Do not redistribute the app or its content, resell access, reverse-engineer it except where the law "
             "allows, remove proprietary notices, or use the app to break the law. Do not use the app's output as if it "
@@ -705,7 +853,13 @@ def main() -> None:
     slugs = [app["slug"] for app in APPS]
     assert len(slugs) == len(set(slugs)), "duplicate slug"
     for app in APPS:
-        assert app["prices"]["weekly"] and app["prices"]["lifetime"], app["slug"]
+        # Subscription apps price weekly...lifetime; the games sell five one-off products
+        # (Remove Ads, starter, three coin packs) and must not be required to price a plan.
+        if app.get("subs", True):
+            assert app["prices"]["weekly"] and app["prices"]["lifetime"], app["slug"]
+        else:
+            assert all(app["prices"].get(k) for k in
+                       ("removeads", "starter", "coins_small", "coins_medium", "coins_large")), app["slug"]
         for page, content in (("privacy", privacy), ("terms", terms), ("support", support)):
             target = root / app["slug"] / page / "index.html"
             target.parent.mkdir(parents=True, exist_ok=True)
