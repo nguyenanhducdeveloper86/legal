@@ -695,6 +695,49 @@ APPS = [
              "skins."),
         ],
     ),
+    dict(
+        slug="monstermath", name="Monster Math: Cage Sums",
+        purpose=("Monster Math is a cage-sums number puzzle: every cage must reach its corner number with addition, "
+                 "subtraction, multiplication or division, and every row and column holds 1 to N exactly once. A level is "
+                 "kept only when the counting solver finds exactly one solution."),
+        local=[
+            "Grids run from 3×3 up to 7×7. Each level is generated on the phone from its own number, so level 40 is the "
+            "same puzzle on every launch, and the trail keeps producing new levels as you climb.",
+            "Cages carry a target and an operator: + and × anywhere, − and ÷ only between two cells. Single-cell cages "
+            "ship filled in, so each cage is a real clue.",
+            "Difficulty is the hardest rule a puzzle actually needs — naked single, cage combinations, hidden single, "
+            "naked pair. A level that would need trial and error is regenerated or simplified before you see it.",
+            "A hint names the technique that applies and points at the cell it decides; undo steps the board back a move. "
+            "One hint costs a hint token, or 30 coins.",
+            "The first clear of a level pays coins depending on your stars; the seven-day snack tin adds more. Coins buy "
+            "hints, three undos and the two extra Chomper skins.",
+            "Progress, coins, skins and settings stay in this app's own storage on the phone, with no account and no sync.",
+        ],
+        free=("The game is free with ads. Remove Ads is one payment that stops banner and interstitial ads; the Starter "
+              "Pack adds 500 coins and 5 hints; the three coin packs are optional. No purchase unlocks a level."),
+        prices=dict(removeads="$3.99", starter="$2.99",
+                    coins_small="$1.99", coins_medium="$4.99", coins_large="$9.99"),
+        subs=False,
+        analytics=False, crash=False, ads=True, tracking=True, rewarded=True,
+        disclaimer=None,
+        faq=[
+            ("How do I remove the ads?",
+             "Buy Remove Ads in Chomper's cave shop, then Restore purchases on another device signed in with the same "
+             "Apple Account. It stops banner and interstitial requests; the optional reward video stays optional."),
+            ("A cage looks like it has two answers.",
+             "It does not: a cage merge is kept only if the counting solver still finds exactly one solution, and the "
+             "test suite replays generated levels to a win. If a grid genuinely has a second answer, send the level "
+             "number — we treat it as a bug."),
+            ("Do I need a subscription?",
+             "No. There is no subscription in this app. Remove Ads, the Starter Pack and the coin packs are charged once."),
+            ("Can I turn off ad tracking?",
+             "Yes. iOS Settings → Privacy & Security → Tracking. In the EEA and UK, Google's consent form appears before "
+             "ads are requested the first time, and declining still leaves non-personalised ads."),
+            ("Where is my progress?",
+             "On this phone only. There is no account and no cloud sync, so deleting the app deletes progress, coins and "
+             "skins."),
+        ],
+    ),
 ]
 
 
