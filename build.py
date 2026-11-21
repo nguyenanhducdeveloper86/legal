@@ -738,6 +738,55 @@ APPS = [
              "skins."),
         ],
     ),
+    dict(
+        slug="jellysort", name="Jelly Sort: Color Jars",
+        purpose=("Jelly Sort is a colour-pour puzzle: tap a jar to lift it, tap another to pour, and the whole top colour "
+                 "moves at once. A level is cleared when every jar is either empty or full of a single colour."),
+        local=[
+            "1000 levels, each generated on the phone from its own number and checked by the app's own search before it is "
+            "drawn, so a level is solvable and level 240 is the same puzzle on every launch and after every relaunch.",
+            "Early levels use three colours; the board grows to seven to nine and then ten to twelve colours, with two spare "
+            "jars for most levels and one spare jar on every fifth level once the big boards start.",
+            "Each level carries a pour budget, set from the shortest solution the solver proved plus a margin. Running out "
+            "of pours ends the round; restarting the level is always free.",
+            "Every jelly colour also draws a small symbol, so a jar can be read without relying on colour alone.",
+            "A hint highlights the next pour of a route the solver agrees with: one hint token, or 30 coins. Undo steps the "
+            "board back one pour and the wallet starts with three of them.",
+            "Coins pay for hints, three undos (20 coins), five more pours (20 coins) and one extra empty jar (40 coins), and "
+            "buy the mint and sunset jar looks. Coins are earned by clearing a level, by the seven-day daily wobble and by "
+            "optional reward videos.",
+            "Progress, stars, coins, skins and the current round stay in this app's own storage on the phone, with no "
+            "account and no sync.",
+        ],
+        free=("The game is free with ads. Remove Ads is one payment that stops banner and interstitial ads; the Starter "
+              "Pack adds coins and hints; the three coin packs are optional. No purchase unlocks a level."),
+        prices=dict(removeads="$3.99", starter="$2.99",
+                    coins_small="$1.99", coins_medium="$4.99", coins_large="$9.99"),
+        subs=False,
+        analytics=False, crash=False, ads=True, tracking=True, rewarded=True,
+        disclaimer=None,
+        faq=[
+            ("How do I remove the ads?",
+             "Buy Remove Ads in Wobble's shop, then Restore purchases on another device signed in with the same Apple "
+             "Account. It stops banner and interstitial requests and stops the ad code asking for tracking permission. "
+             "The optional reward videos remain optional and are never shown unless you tap one."),
+            ("A jar looks stuck.",
+             "Pouring only moves the whole top colour onto an empty jar or onto the same colour. If nothing can move, Undo "
+             "steps back a pour, and one extra empty jar can be bought for coins or earned from an optional reward video. "
+             "Clearing a level never needs a purchase: restart is free."),
+            ("I ran out of pours.",
+             "The budget is the shortest solution the solver proved plus a margin. Restarting is free, and five more pours "
+             "can be added for coins."),
+            ("Do I need a subscription?",
+             "No. There is no subscription in this app. Remove Ads, the Starter Pack and the coin packs are charged once."),
+            ("Can I turn off ad tracking?",
+             "Yes. iOS Settings → Privacy & Security → Tracking. In the EEA and UK, Google's consent form appears before "
+             "ads are requested the first time, and declining still leaves non-personalised ads."),
+            ("Where is my progress?",
+             "On this phone only. There is no account and no cloud sync, so deleting the app deletes progress, coins and "
+             "the jar looks you bought with coins."),
+        ],
+    ),
 ]
 
 
