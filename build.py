@@ -976,8 +976,12 @@ def terms(app: dict) -> str:
             *purchase_terms(app),
             "<h2>Restoring a purchase</h2>",
             "<p>Tap <em>Restore Purchases</em> on the purchase screen, signed in with the same Apple Account that bought "
-            "it. Purchases cannot be transferred between Apple Accounts. If a restore does not bring Pro back, write to "
-            f'<a href="mailto:{EMAIL}">{EMAIL}</a> with the product name and the date of purchase.</p>',
+            "it. Purchases cannot be transferred between Apple Accounts. "
+            + ("If a restore does not bring Pro back, write to "
+               f'<a href="mailto:{EMAIL}">{EMAIL}</a> with the product name and the date of purchase.</p>'
+               if app.get("subs", True) else
+               "If a restore does not bring a purchase back, write to "
+               f'<a href="mailto:{EMAIL}">{EMAIL}</a> with the product name and the date of purchase.</p>'),
             "<h2>Refunds</h2>",
             "<p>Refunds are handled by Apple, not by us — we cannot see or reverse a charge. Request one at "
             f'<a href="{REPORT_PROBLEM}">{REPORT_PROBLEM}</a>. '
@@ -1001,8 +1005,12 @@ def terms(app: dict) -> str:
     )
     body.append("<h2>Changes to these terms</h2>")
     body.append(
-        "<p>A change appears at this address with a new date above. A change to what a purchase includes applies from "
-        "your next renewal, not to a period you have already paid for.</p>"
+        "<p>A change appears at this address with a new date above. "
+        + ("A change to what a purchase includes applies from your next renewal, not to a period you have already paid "
+           "for.</p>"
+           if app.get("subs", True) else
+           "A change to what a purchase includes applies from your next purchase, not to something you have already "
+           "bought.</p>")
     )
     return head(f"{name} Terms of Use") + "\n".join(body) + "\n" + tail()
 
