@@ -649,6 +649,52 @@ APPS = [
              "coins."),
         ],
     ),
+    dict(
+        slug="pixelpickle", name="Pixel Pickle: Nonograms",
+        purpose=("Pixel Pickle is a nonogram (picross) puzzle: every row and column carries a list of clue numbers, and "
+                 "filling exactly those runs draws the hidden picture. The game's own line solver decides every cell of "
+                 "a puzzle before it is shown, so a board can always be finished without guessing."),
+        local=[
+            "Boards grow from 5×5 warm-ups to full 15×15 pictures: 5×5 for levels 1–20, 10×10 for 21–200, 10×15 for "
+            "201–600 and 15×15 from 601. The trail has no fixed end — each level is generated on the phone from its "
+            "number, so level 201 is the same picture on every launch.",
+            "Tap to fill a pixel, drag to paint a row, and switch to X notes to mark the cells you have proven empty. "
+            "Clue numbers fade once their row or column is finished.",
+            "A hint fills one cell that your own notes already prove, and undo steps back one pixel; both are paid from "
+            "coins, and coins are earned for free as well.",
+            "Challenge mode ends a round after three pixels that contradict the picture; Relax mode removes that limit "
+            "and lets you work the same puzzles without pressure.",
+            "Finishing a picture pays coins, the daily reward adds more, and coins also buy the mint and sunset skins. A "
+            "reward video can continue a round that ran out in challenge mode.",
+            "Progress, coins, skins and settings stay in this app's own storage on the phone, with no account and no "
+            "sync.",
+        ],
+        free=("The game is free with ads. Remove Ads is one payment that stops banner and interstitial ads; the Starter "
+              "Pack adds coins and hints; the three coin packs are optional. No purchase unlocks a level."),
+        prices=dict(removeads="$3.99", starter="$2.99",
+                    coins_small="$1.99", coins_medium="$4.99", coins_large="$9.99"),
+        subs=False,
+        analytics=False, crash=False, ads=True, tracking=True, rewarded=True,
+        disclaimer=None,
+        faq=[
+            ("How do I remove the ads?",
+             "Buy Remove Ads in the shop, then Restore Purchases on another device signed in with the same Apple Account. "
+             "It stops banner and interstitial requests for good; the optional reward video stays optional."),
+            ("I am stuck on a puzzle.",
+             "You never have to guess: mark the cells you have proven empty with X notes and re-read the clues — a row or "
+             "column with one long run plus an X or two usually collapses. A hint fills a single cell your own notes "
+             "already prove, so it never reveals the picture for you."),
+            ("Do I need a subscription?",
+             "No. There is no subscription in this app. Every purchase is charged once, and the free game plays every "
+             "level in the trail."),
+            ("Can I turn off ad tracking?",
+             "Yes. iOS Settings → Privacy & Security → Tracking. In the EEA and UK, Google's consent form appears before "
+             "ads are requested the first time, and declining still leaves non-personalised ads."),
+            ("Where is my progress?",
+             "On this phone only. There is no account and no cloud sync, so deleting the app deletes progress, coins and "
+             "skins."),
+        ],
+    ),
 ]
 
 
