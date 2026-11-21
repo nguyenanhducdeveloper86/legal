@@ -488,6 +488,123 @@ APPS = [
              "are requested the first time."),
         ],
     ),
+    dict(
+        slug="boomgarden", name="Boom Garden: No-Guess Mines",
+        purpose=("Boom Garden is a deduction puzzle: dig the soil, read the seed-packet numbers and plant a flower on every "
+                 "mole trap you can prove is buried there. No garden ever needs a lucky click."),
+        local=[
+            "Boards run from 8x8 up to 14x18 with three hearts per garden. A trap costs one heart and plays a cartoon "
+            "boing; the round ends after the third, and retrying the same garden is free.",
+            "All 200 gardens are run through a solver before they ship — single-cell logic, the pair rule and the "
+            "end-game trap count. A garden that could not be finished without guessing is thrown out.",
+            "Pinch to zoom between 1x and 3.5x and drag to pan the wide plots, with a chip that snaps the board back.",
+            "A first clear pays 15 to 25 coins depending on stars. One hint costs 30 coins, three undos cost 20, and the "
+            "daily worm fund pays 25 to 200 coins. Three cosmetic neckerchiefs are bought with earned coins.",
+            "Progress, coins and settings stay in this app's own storage on the phone, with no account and no sync.",
+        ],
+        free=("The game is free with ads. Remove Ads is one payment that stops every ad format; the Starter Pack adds 500 "
+              "coins and 5 hints. No purchase unlocks a level — all 200 are already in the app."),
+        prices=dict(removeads="$3.99", starter="$2.99",
+                    coins_small="$1.99", coins_medium="$4.99", coins_large="$9.99"),
+        subs=False,
+        analytics=False, crash=False, ads=True, tracking=True, rewarded=True,
+        disclaimer=None,
+        faq=[
+            ("How do I remove the ads?",
+             "Buy Remove Ads in Moley's tool shed, then Restore Purchases on another device signed in with the same Apple "
+             "Account. It stops ad requests for good; gardens, coins and hints are unchanged otherwise."),
+            ("A garden feels like a coin flip.",
+             "It is not: every garden is finished by a solver using only provable moves before it ships, so there is "
+             "always a next move you can prove. Send the level number if you find one that needs a guess — we treat it "
+             "as a bug and replace the garden."),
+            ("I ran out of hearts.",
+             "The lose screen offers five spare hearts and one undo for 20 coins, an optional video, or a free retry of "
+             "the same garden. Nothing expires."),
+            ("Can I turn off ad tracking?",
+             "Yes. iOS Settings → Privacy & Security → Tracking. In the EEA and UK, Google's consent form appears before "
+             "ads are requested the first time, and declining still leaves non-personalised ads."),
+            ("Where is my progress?",
+             "On this phone only. There is no account and no cloud sync, so deleting the app deletes progress and coins."),
+        ],
+    ),
+    dict(
+        slug="lamplab", name="Lamp Lab: Light Up Puzzle",
+        purpose=("Lamp Lab is a lamp-placement logic puzzle: hang bulbs until every cell is lit, keep bulbs out of each "
+                 "other's line of sight, and match the number on every wall."),
+        local=[
+            "Akari rules on boards from 7x7 to 10x10: a bulb lights its row and column until a wall stops the beam, a "
+            "numbered wall wants exactly that many bulbs beside it, and two bulbs may never see each other.",
+            "Each level is generated on the phone from its own number with a fixed seed, so level 37 is the same board "
+            "on every launch and on any phone. The trail has no fixed end.",
+            "A hint highlights one bulb of a proven solution, undo is unlimited and free, and a first clear pays coins.",
+            "Progress, stars, coins and settings stay in this app's own storage on the phone, with no account and no sync.",
+        ],
+        free=("The game is free with ads. Remove Ads is one payment that stops every ad format; the Starter Pack adds 500 "
+              "coins and 5 hints, and the three coin packs are optional. No purchase unlocks a level."),
+        prices=dict(removeads="$3.99", starter="$2.99",
+                    coins_small="$1.99", coins_medium="$4.99", coins_large="$9.99"),
+        subs=False,
+        analytics=False, crash=False, ads=True, tracking=True, rewarded=True,
+        disclaimer=None,
+        faq=[
+            ("How do I remove the ads?",
+             "Buy Remove Ads in Watts' supply bench, then Restore Purchases on another device signed in with the same "
+             "Apple Account. It stops banner and interstitial requests for good; optional reward videos stay optional."),
+            ("The board will not light up.",
+             "Every level is solved by the app's own solver before the light is drawn, so a solvable answer always "
+             "exists. Check the wall numbers first — a hidden number still applies — and tap Hint for one bulb that "
+             "belongs. Send the level number if a board still looks impossible; we treat it as a bug."),
+            ("Do I need a subscription?",
+             "No. There is no subscription in this app. Every purchase is charged once, and the free game plays every "
+             "level in the trail."),
+            ("Can I turn off ad tracking?",
+             "Yes. iOS Settings → Privacy & Security → Tracking. In the EEA and UK, Google's consent form appears before "
+             "ads are requested the first time, and declining still leaves non-personalised ads."),
+            ("Where is my progress?",
+             "On this phone only. There is no account and no cloud sync, so deleting the app deletes progress and coins."),
+        ],
+    ),
+    dict(
+        slug="traffictantrum", name="Traffic Tantrum: Unblock",
+        purpose=("Traffic Tantrum is a slide-the-traffic puzzle: nudge the toy cars along their own lanes until the "
+                 "grumpy red car rolls out of the exit."),
+        local=[
+            "Tap or drag a car and it rolls as far as its lane allows. Vehicles only move along their own line, and the "
+            "run ends when the hero car leaves the right edge of the yellow row.",
+            "Every jam is built on the phone from the level number with a fixed seed, then solved by a breadth-first "
+            "search that proves the shortest route, so level 37 is the same jam on every launch and on any phone. The "
+            "trail has no fixed end.",
+            "Stars follow the move count against that proven shortest route; each level has a move budget and no timer.",
+            "A hint highlights one move of a proven solution, undo pockets are spent one at a time, a first clear pays "
+            "coins and the map pays a daily bonus. Optional reward videos can pay a free hint, five extra moves or double "
+            "a win.",
+            "Progress, stars, coins and settings stay in this app's own storage on the phone, with no account and no sync.",
+        ],
+        free=("The game is free with ads. Remove Ads is one payment that stops every ad format; the Starter Pack adds 500 "
+              "coins and 5 hints, and the three coin packs are optional. No purchase unlocks a level."),
+        prices=dict(removeads="$3.99", starter="$2.99",
+                    coins_small="$1.99", coins_medium="$4.99", coins_large="$9.99"),
+        subs=False,
+        analytics=False, crash=False, ads=True, tracking=True, rewarded=True,
+        disclaimer=None,
+        faq=[
+            ("How do I remove the ads?",
+             "Buy Remove Ads in the shop, then Restore Purchases on another device signed in with the same Apple Account. "
+             "It stops banner and interstitial requests for good; optional reward videos stay optional."),
+            ("The jam looks impossible.",
+             "Every jam is solved by the app's own solver before it is drawn, so a route always exists. Tap Hint for the "
+             "next move of a proven one. If a level still looks stuck, send the level number; we treat it as a bug."),
+            ("Do I need a subscription?",
+             "No. There is no subscription in this app. Every purchase is charged once, and the free game plays every "
+             "level in the trail."),
+            ("Can I turn off ad tracking?",
+             "Yes. iOS Settings → Privacy & Security → Tracking. In the EEA and UK, Google's consent form appears before "
+             "ads are requested the first time, and declining still leaves non-personalised ads."),
+            ("Where is my progress?",
+             "On this phone only. There is no account and no cloud sync, so deleting the app deletes progress, stars and "
+             "coins."),
+        ],
+    ),
 ]
 
 
