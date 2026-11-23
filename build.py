@@ -6,8 +6,8 @@ project.yml, Info.plist, PrivacyInfo.xcprivacy and store/metadata.md (see the
 "facts" lists in each entry). Prices come from studio/aso/pricing.json — do not
 invent them here; copy the four numbers from that file.
 
-    python3 build.py            # writes <slug>/{privacy,terms,support}/index.html
-    python3 build.py --check    # fails if any slug lacks one of the three pages
+    python3 build.py            # writes <slug>/<page>/index.html for every page in the app
+    python3 build.py --check    # fails if any slug lacks one of its pages or contact email
 
 Served at https://nguyenanhducdeveloper86.github.io/legal/<slug>/<page>/
 """
@@ -24,6 +24,10 @@ GOOGLE_PARTNER = "https://policies.google.com/technologies/partner-sites"
 FIREBASE_PRIVACY = "https://firebase.google.com/support/privacy"
 REVENUECAT_PRIVACY = "https://www.revenuecat.com/privacy"
 UPDATED = "19 November 2026"
+# (folder, nav label) in the order every app page shows them.
+PAGE_LABELS = (("privacy", "Privacy"), ("terms", "Terms"), ("support", "Support"))
+ALL_PAGES = tuple(page for page, _ in PAGE_LABELS)
+LANDING_LABELS = {"privacy": "Privacy policy", "terms": "Terms of use", "support": "Support"}
 
 STYLE = (
     ':root{color-scheme:light dark}'
@@ -787,6 +791,45 @@ APPS = [
              "the jar looks you bought with coins."),
         ],
     ),
+    dict(
+        slug="catpet", name="catPet",
+        purpose=("catPet keeps a record of your cat on your iPhone: the weight you enter at each weigh-in, the points you "
+                 "record and the settings you choose, all stored on the device."),
+        local=[
+            "Weigh-ins you enter, with the date, so the change over time stays visible.",
+            "The points you record in the app.",
+            "The app's own settings, including whether sound is on.",
+            "All of it stays in the app's own storage on the phone, with no account and no sync.",
+        ],
+        email="support@xcape.build",
+        updated="23 November 2026",
+        support_intro=("catPet is a small iPhone app for keeping a record of your cat: the weight you enter at each "
+                       "weigh-in, the points you record and the settings you choose. Everything is kept on the device, "
+                       "so most fixes happen on your phone rather than on a server."),
+        pages=("privacy", "support"),
+        purchases=False,
+        export=False,
+        analytics=False, crash=False, ads=False, tracking=False,
+        lines=[
+            "<p><strong>No server and no analytics.</strong> This version of catPet has no backend, no analytics SDK, no "
+            "advertising SDK and no in-app purchases. Nothing you enter or do is sent to us or to anyone else.</p>",
+            "<p>If a later version adds advertising or in-app purchases, this page will be updated before that version is "
+            "released.</p>",
+        ],
+        disclaimer=None,
+        faq=[
+            ("I lost my data.",
+             "Everything is stored only on this iPhone. There is no account, no cloud backup and no restore service, so "
+             "we cannot recover records for you. Deleting the app deletes its data, and reinstalling starts empty."),
+            ("My cat is losing weight. What does the app say?",
+             "catPet only stores the weights and points you enter; it does not diagnose anything and does not give "
+             "veterinary advice. A trend is arithmetic on your own entries. If a cat is losing weight, ask a "
+             "veterinarian."),
+            ("How do I turn the sound off?",
+             "Open the app's settings and turn sound off. The choice is kept on this device; there is no account to "
+             "change it on."),
+        ],
+    ),
 ]
 
 
@@ -798,20 +841,25 @@ def head(title: str) -> str:
     )
 
 
-def nav(slug: str, name: str) -> str:
-    base = f"/legal/{slug}"
-    return (
-        f'<nav><a href="/legal/">All apps</a>'
-        f'<a href="{base}/privacy/">Privacy</a>'
-        f'<a href="{base}/terms/">Terms</a>'
-        f'<a href="{base}/support/">Support</a></nav>'
+def pages(app: dict) -> tuple[str, ...]:
+    """Every app ships all three pages; catPet has no purchases, so no terms page."""
+    return app.get("pages", ALL_PAGES)
+
+
+def nav(app: dict) -> str:
+    base = f"/legal/{app['slug']}"
+    links = "".join(
+        f'<a href="{base}/{page}/">{label}</a>'
+        for page, label in PAGE_LABELS if page in pages(app)
     )
+    return f'<nav><a href="/legal/">All apps</a>{links}</nav>'
 
 
-def tail() -> str:
+def tail(app: dict | None = None) -> str:
+    mail = app.get("email", EMAIL) if app else EMAIL
     return (
         f'<p style="opacity:.6;margin-top:3rem">Contact: '
-        f'<a href="mailto:{EMAIL}">{EMAIL}</a></p></body></html>\n'
+        f'<a href="mailto:{mail}">{mail}</a></p></body></html>\n'
     )
 
 
@@ -827,7 +875,8 @@ def faq_html(app: dict) -> str:
 
 
 def privacy(app: dict) -> str:
-    name, slug = app["name"], app["slug"]
+    name, mail = app["name"], app.get("email", EMAIL)
+    updated = app.get("updated", UPDATED)
     collect = [
         "No account, no sign-in, no profile. We never ask for your name, email address or phone number.",
         "No advertising identifier and no advertising SDK are used by this app."
@@ -845,14 +894,15 @@ def privacy(app: dict) -> str:
             "Crash reports through Firebase Crashlytics (Google): the stack trace, app version, device model and operating "
             "system version at the moment of a crash. Crash reports carry no name, email address or contact data."
         )
-    collect.append(
-        "Purchases are verified by the App Store. We receive sales and proceeds reports from Apple in aggregate; we do not "
-        "receive your name, address or payment details."
-    )
+    if app.get("purchases", True):
+        collect.append(
+            "Purchases are verified by the App Store. We receive sales and proceeds reports from Apple in aggregate; we do "
+            "not receive your name, address or payment details."
+        )
     collect.append("We do not sell your personal information, and we do not share it with data brokers.")
 
-    body = [nav(slug, name), f"<h1>{name} Privacy Policy</h1>",
-            f'<p style="opacity:.6">Last updated {UPDATED}. Applies to {name} for iPhone.</p>',
+    body = [nav(app), f"<h1>{name} Privacy Policy</h1>",
+            f'<p style="opacity:.6">Last updated {updated}. Applies to {name} for iPhone.</p>',
             "<h2>Short version</h2>",
             f"<p>{app['purpose']} There is no account. "
             + ("The app shows ads, and ads are the only reason it uses an advertising identifier." if app["ads"]
@@ -897,13 +947,14 @@ def privacy(app: dict) -> str:
             "how the app behaves in airplane mode.</p>"
         )
 
-    body.append("<h2>Purchases</h2>")
-    body.append(
-        "<p>Payment for any purchase is handled entirely by Apple through your Apple Account. We never see your card, "
-        "your billing address or your Apple Account credentials. Apple tells the app whether an entitlement is active; "
-        "the receipt stays on your device and, for a subscription, with Apple. Apple's handling of your data is "
-        f'described at <a href="{APPLE_PRIVACY}">{APPLE_PRIVACY}</a>.</p>'
-    )
+    if app.get("purchases", True):
+        body.append("<h2>Purchases</h2>")
+        body.append(
+            "<p>Payment for any purchase is handled entirely by Apple through your Apple Account. We never see your card, "
+            "your billing address or your Apple Account credentials. Apple tells the app whether an entitlement is active; "
+            "the receipt stays on your device and, for a subscription, with Apple. Apple's handling of your data is "
+            f'described at <a href="{APPLE_PRIVACY}">{APPLE_PRIVACY}</a>.</p>'
+        )
 
     if app["ads"] or app["analytics"] or app["crash"]:
         body.append("<h2>Network use</h2>")
@@ -919,8 +970,9 @@ def privacy(app: dict) -> str:
     body.append("<h2>Storage and deletion</h2>")
     body.append(
         "<p>Your data — the records, progress, history and settings this app keeps — is stored in the app's own "
-        "container on the phone. It is not uploaded and there is no restore service. Deleting the app deletes it, "
-        "and any file you exported beforehand stays wherever you sent it.</p>"
+        "container on the phone. It is not uploaded and there is no restore service. Deleting the app deletes it"
+        + (", and any file you exported beforehand stays wherever you sent it.</p>"
+           if app.get("export", True) else ".</p>")
     )
     body.append("<h2>Children</h2>")
     body.append(
@@ -940,7 +992,7 @@ def privacy(app: dict) -> str:
         "Data on your device is under your control: change it in the app, or delete the app. "
         + google_controller
         + "If you have a question about this policy or a request under the GDPR, UK GDPR or "
-        f'CCPA, write to <a href="mailto:{EMAIL}">{EMAIL}</a>.</p>'
+        f'CCPA, write to <a href="mailto:{mail}">{mail}</a>.</p>'
     )
     body.append("<h2>Changes</h2>")
     body.append(
@@ -949,10 +1001,10 @@ def privacy(app: dict) -> str:
     )
     body.append("<h2>Contact</h2>")
     body.append(
-        f'<p>Privacy questions: <a href="mailto:{EMAIL}">{EMAIL}</a>. '
+        f'<p>Privacy questions: <a href="mailto:{mail}">{mail}</a>. '
         f'The publisher is an independent developer, and this address reaches the person who wrote the app.</p>'
     )
-    return head(f"{name} Privacy Policy") + "\n".join(body) + "\n" + tail()
+    return head(f"{name} Privacy Policy") + "\n".join(body) + "\n" + tail(app)
 
 
 def purchase_terms(app: dict) -> list[str]:
@@ -1013,8 +1065,8 @@ def purchase_terms(app: dict) -> list[str]:
 
 
 def terms(app: dict) -> str:
-    name, slug = app["name"], app["slug"]
-    body = [nav(slug, name), f"<h1>{name} Terms of Use</h1>",
+    name, mail = app["name"], app.get("email", EMAIL)
+    body = [nav(app), f"<h1>{name} Terms of Use</h1>",
             f'<p style="opacity:.6">Last updated {UPDATED}. These terms cover {name} for iPhone and every purchase made '
             "inside it.</p>",
             "<h2>Licence</h2>",
@@ -1065,15 +1117,21 @@ def terms(app: dict) -> str:
 
 
 def support(app: dict) -> str:
-    name, slug = app["name"], app["slug"]
-    body = [nav(slug, name), f"<h1>{name} Support</h1>",
-            f'<p style="opacity:.6">Last updated {UPDATED}.</p>',
+    name, mail, slug = app["name"], app.get("email", EMAIL), app["slug"]
+    updated = app.get("updated", UPDATED)
+    body = [nav(app), f"<h1>{name} Support</h1>",
+            f'<p style="opacity:.6">Last updated {updated}.</p>']
+    if app.get("support_intro"):
+        body.append(f"<p>{app['support_intro']}</p>")
+    body += [
             "<h2>Contact us</h2>",
-            f'<p>Email <a href="mailto:{EMAIL}">{EMAIL}</a>. Include the app name, the app version (Settings → Apps → '
+            f'<p>Email <a href="mailto:{mail}">{mail}</a>. Include the app name, the app version (Settings → Apps → '
             f"{name}, or the About screen), your iPhone model, the iOS version, and what you did just before the problem. "
             "We answer within two business days.</p>",
             "<h2>Common questions</h2>",
-            faq_html(app),
+            faq_html(app)]
+    if app.get("purchases", True):
+        body += [
             "<h2>Purchases and restoring</h2>",
             "<p>Purchases are handled by Apple. On a new phone or after reinstalling, open the purchase screen, tap "
             "<em>Restore Purchases</em>, and make sure the device is signed in with the same Apple Account that bought "
@@ -1084,25 +1142,35 @@ def support(app: dict) -> str:
             "<h2>Refunds</h2>",
             f'<p>We cannot issue refunds — Apple handles all billing. Request one at '
             f'<a href="{REPORT_PROBLEM}">{REPORT_PROBLEM}</a>.</p>',
-            "<h2>Where is my data?</h2>",
-            "<p>On your device only. There is no account and no cloud sync, so deleting the app deletes its data. Export "
-            "anything you want to keep first.</p>",
-            "<h2>Privacy</h2>",
-            f'<p>See the <a href="/legal/{slug}/privacy/">privacy policy</a> and the '
-            f'<a href="/legal/{slug}/terms/">terms of use</a>.</p>',
-            "<h2>Accessibility</h2>",
-            "<p>If a screen is hard to use with VoiceOver, large text or a switch control, tell us which screen and "
-            "which device — we treat it as a bug.</p>",
-            ]
-    return head(f"{name} Support") + "\n".join(body) + "\n" + tail()
+        ]
+    body += [
+        "<h2>Where is my data?</h2>",
+        ("<p>On your device only. There is no account and no cloud sync, so deleting the app deletes its data. Export "
+         "anything you want to keep first.</p>"
+         if app.get("export", True) else
+         "<p>On your device only. There is no account and no cloud sync, so deleting the app deletes its data, and "
+         "there is no backup to restore it from.</p>"),
+        "<h2>Privacy</h2>",
+        f'<p>See the <a href="/legal/{slug}/privacy/">privacy policy</a>'
+        + (f' and the <a href="/legal/{slug}/terms/">terms of use</a>' if "terms" in pages(app) else "")
+        + ".</p>",
+        "<h2>Accessibility</h2>",
+        "<p>If a screen is hard to use with VoiceOver, large text or a switch control, tell us which screen and "
+        "which device — we treat it as a bug.</p>",
+    ]
+    return head(f"{name} Support") + "\n".join(body) + "\n" + tail(app)
+
+
+def page_links(app: dict) -> str:
+    return " · ".join(
+        f'<a href="/legal/{app["slug"]}/{page}/">{label}</a>'
+        for page, label in PAGE_LABELS if page in pages(app)
+    )
 
 
 def apps_table() -> str:
     rows = "\n".join(
-        f'<tr><td>{app["name"]}</td>'
-        f'<td><a href="/legal/{app["slug"]}/privacy/">Privacy</a> · '
-        f'<a href="/legal/{app["slug"]}/terms/">Terms</a> · '
-        f'<a href="/legal/{app["slug"]}/support/">Support</a></td></tr>'
+        f'<tr><td>{app["name"]}</td><td>{page_links(app)}</td></tr>'
         for app in APPS
     )
     return ("<table>\n<thead><tr><th>App</th><th>Pages</th></tr></thead>\n<tbody>\n"
@@ -1129,16 +1197,18 @@ def obsolete(what: str) -> str:
 def landing(app: dict) -> str:
     """<slug>/ — the marketing URL in App Store Connect."""
     name, slug = app["name"], app["slug"]
+    items = "".join(
+        f'<li><a href="/legal/{slug}/{page}/">{LANDING_LABELS[page]}</a></li>'
+        for page, _ in PAGE_LABELS if page in pages(app)
+    )
     return (
         head(f"{name}")
-        + nav(slug, name)
+        + nav(app)
         + f"<h1>{name}</h1>"
         + f"<p>{app['purpose']}</p>"
         + "<h2>Pages</h2>"
-        + f'<ul><li><a href="/legal/{slug}/privacy/">Privacy policy</a></li>'
-        + f'<li><a href="/legal/{slug}/terms/">Terms of use</a></li>'
-        + f'<li><a href="/legal/{slug}/support/">Support</a></li></ul>'
-        + tail()
+        + f"<ul>{items}</ul>"
+        + tail(app)
     )
 
 
@@ -1159,30 +1229,34 @@ def main() -> None:
     root = Path(__file__).resolve().parent
     slugs = [app["slug"] for app in APPS]
     assert len(slugs) == len(set(slugs)), "duplicate slug"
+    generators = {"privacy": privacy, "terms": terms, "support": support}
     for app in APPS:
         # Subscription apps price weekly...lifetime; the games sell five one-off products
-        # (Remove Ads, starter, three coin packs) and must not be required to price a plan.
-        if app.get("subs", True):
-            assert app["prices"]["weekly"] and app["prices"]["lifetime"], app["slug"]
-        else:
-            assert all(app["prices"].get(k) for k in
-                       ("removeads", "starter", "coins_small", "coins_medium", "coins_large")), app["slug"]
-        for page, content in (("privacy", privacy), ("terms", terms), ("support", support)):
+        # (Remove Ads, starter, three coin packs); catPet sells nothing in this version.
+        if app.get("purchases", True):
+            if app.get("subs", True):
+                assert app["prices"]["weekly"] and app["prices"]["lifetime"], app["slug"]
+            else:
+                assert all(app["prices"].get(k) for k in
+                           ("removeads", "starter", "coins_small", "coins_medium", "coins_large")), app["slug"]
+        for page in pages(app):
             target = root / app["slug"] / page / "index.html"
             target.parent.mkdir(parents=True, exist_ok=True)
-            target.write_text(content(app), encoding="utf-8")
-        (root / app["slug"] / "index.html").write_text(landing(app), encoding="utf-8")
-    (root / "index.html").write_text(index(), encoding="utf-8")
-    (root / "privacy" / "index.html").write_text(obsolete("Privacy policy"), encoding="utf-8")
-    (root / "support" / "index.html").write_text(obsolete("Support"), encoding="utf-8")
-    print(f"wrote {len(APPS)} apps x 4 pages + index.html + 2 redirect stubs")
+            target.write_text(generators[page](app), encoding="utf-8", newline="\n")
+        (root / app["slug"] / "index.html").write_text(landing(app), encoding="utf-8", newline="\n")
+    (root / "index.html").write_text(index(), encoding="utf-8", newline="\n")
+    (root / "privacy" / "index.html").write_text(obsolete("Privacy policy"), encoding="utf-8", newline="\n")
+    (root / "support" / "index.html").write_text(obsolete("Support"), encoding="utf-8", newline="\n")
+    total = sum(len(pages(app)) for app in APPS) + len(APPS)
+    print(f"wrote {total} pages for {len(APPS)} apps + index.html + 2 redirect stubs")
     if "--check" in sys.argv:
         for app in APPS:
-            for page in ("privacy", "terms", "support"):
+            mail = app.get("email", EMAIL)
+            for page in pages(app):
                 path = root / app["slug"] / page / "index.html"
                 assert path.exists(), path
                 text = path.read_text(encoding="utf-8")
-                assert EMAIL in text, f"{path}: no contact email"
+                assert mail in text, f"{path}: no contact email"
                 assert EULA in text or page != "terms", f"{path}: terms without Apple EULA"
             assert (root / app["slug"] / "index.html").exists(), app["slug"]
         print("check: every page exists, has the contact email, terms cite Apple's EULA")
